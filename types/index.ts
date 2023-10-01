@@ -51,7 +51,7 @@ export type TCategoryName =
   'Entertainment' |
   'Bills' |
   'Other';
-
+export const allCategories: TCategoryName[] = ['Bills', 'Housing', 'Transportation', 'Food', 'Medical & Healthcare', 'Personal Spending', 'Entertainment', 'Other'];
 export interface ICategory {
   name: TCategoryName;
   id: number;
@@ -64,10 +64,16 @@ export interface ICreateCategory extends ICategory {
 export interface IIncrementCategory {
   id: number;
   amount: number;
-  budgetId: number;
+  budgetId: string;
 }
 
 export interface ISetCategoryRequest {
   budgetId: string;
   categories: ICreateCategory[];
+}
+
+export interface IShareBudgetRequest {
+  id: string;
+  emails: string[];
+  message: string;
 }

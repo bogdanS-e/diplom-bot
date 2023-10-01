@@ -6,12 +6,15 @@ import BotContext, { Menu } from "./botContext";
 
 export default async function handleStartFlow(user: IUser | null, chatId: number, text: string) {
   const db = await DB.getInstance();
-  const context = new BotContext();
+  const context = BotContext.getInstance();
   const bot = BotContext.bot;
 
   if (user) {
     await bot.sendMessage(chatId, `Hey, ${user.name}`);
-    context.setMenu(Menu.main, chatId);
+    context.setMenu({
+      name: Menu.main, 
+      chatId,
+    });
     
     return;
   }
@@ -27,5 +30,8 @@ export default async function handleStartFlow(user: IUser | null, chatId: number
 
   await db.collection('users').updateOne({ _id: new ObjectId(userId) }, { $set: { chatId } });
   await bot.sendMessage(chatId, `Hey, ${linkedUser.name}`);
-  context.setMenu(Menu.main, chatId);
+  context.setMenu({
+    name: Menu.main, 
+    chatId,
+  });
 }
