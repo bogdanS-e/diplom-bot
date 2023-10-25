@@ -10,6 +10,7 @@ import handleStartFlow from './startFlow';
 import { IBudget, IUser, TCategoryName, allCategories } from './types';
 import { getAllBudgets, getBudgetHistory, getSpecificBudget, shareBudget, spendMoney, spendMoneyOnCategory } from './budgetsFlow';
 import BotContext, { Menu } from './botContext';
+import { handleAnalytics } from './analytic';
 
 const app = express();
 const port = 5000;
@@ -69,6 +70,12 @@ bot.on('message', async ({ chat, text }) => {
 
   if (text?.startsWith('/start')) {
     handleStartFlow(user, chatId, text);
+
+    return;
+  }
+
+  if (text?.startsWith('/chart')) {
+    handleAnalytics(chatId);
 
     return;
   }
